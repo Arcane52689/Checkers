@@ -35,7 +35,7 @@ class Checkers
   end
 
   def game_over?
-
+    board.get_pieces(current_player.color).none?
   end
 
   def get_move

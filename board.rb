@@ -43,8 +43,8 @@ class Board
     grid.flatten.compact
   end
 
-  def color_pieces(color)
-    grid.flatten.compact.select { |piece| piece.color == color }
+  def get_pieces(color)
+    pieces.select { |piece| piece.color == color }
   end
 
   def in_board?(pos)
