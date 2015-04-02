@@ -1,4 +1,7 @@
 require "Byebug"
+require_relative "checkers_node.rb"
+
+
 class ComputerPlayer
 
 
@@ -40,6 +43,42 @@ class ComputerPlayer
 
   def pick_move
     move = @piece.jumps.any? ? [@piece.jumps.first] : [@piece.moves.sample]
+  end
+
+end
+
+
+
+class SmartComp < ComputerPlayer
+
+  def initialize
+    @name = "GIZMO9001"
+  end
+
+  def pick_piece
+    puts "HI"
+    best = 0
+    best_piece = nil
+    pieces = board.pieces.select { |piece| piece.moves.any? }
+    pieces.each do |piece|
+      node = CheckersNode.new(color, board, piece.position)
+      move, value = node.best_child
+      if best_piece == nil
+        best_piece = piece
+        @move, best = node.best_child
+      end
+      if value > best
+        best_piece = piece
+        @move, best = move, value
+      end
+    end
+    puts "hi"
+    p best_piece, move
+    [best_piece.position]
+  end
+
+  def pick_move
+    [@move]
   end
 
 end

@@ -2,6 +2,7 @@ require_relative 'board.rb'
 require_relative 'piece.rb'
 require_relative 'Human_player.rb'
 require_relative 'computer_player.rb'
+require_relative 'checkers_node.rb'
 
 
 class Checkers
@@ -10,7 +11,7 @@ class Checkers
   attr_accessor :current_player
 
   def self.comp_game
-    c1 = ComputerPlayer.new
+    c1 = SmartComp.new
     c2 = ComputerPlayer.new
     Checkers.new(c1,c2).play
   end
