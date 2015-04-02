@@ -15,6 +15,10 @@ class Board
     [2,1],[2,3],[2,5],[2,7]
   ]
 
+  def self.default_game_board
+    Board.new.place_pieces
+  end
+
 
 
   attr_accessor :grid
@@ -59,6 +63,7 @@ class Board
     if (start_pos[0] - end_pos[0]).abs == 2
       remove_jumped(start_pos,end_pos)
     end
+    puts display
   end
 
   def remove_jumped(pos1,pos2)
@@ -127,6 +132,7 @@ class Board
     BLUE_START.each do |pos|
       Piece.new(:black,pos,self)
     end
+    self
   end
 
 
