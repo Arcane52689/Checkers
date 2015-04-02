@@ -9,7 +9,7 @@ class Board
     [7,0],[7,2],[7,4],[7,6]
   ]
 
-  BLACK_START = [
+  BLUE_START = [
     [0,1],[0,3],[0,5],[0,7],
     [1,0],[1,2],[1,4],[1,6],
     [2,1],[2,3],[2,5],[2,7]
@@ -43,15 +43,36 @@ class Board
     grid.flatten.compact.select { |piece| piece.color == color }
   end
 
-  def in_board(pos)
+  def in_board?(pos)
     row, col = pos
-    row.between(0,7) && col.between(0,7)
+    row.between?(0,7) && col.between?(0,7)
   end
 
-  def occupied(pos)
+  def occupied?(pos)
     !self[pos].nil?
   end
 
+  def move(start_pos,end_pos)
+    piece = self[start_pos]
+    raise "NOT A VALID MOVE" unless piece.moves.include?(end_pos)
+    piece.move(end_pos)
+    if (start_pos[0] - end_pos[0]).abs == 2
+      remove_jumped(start_pos,end_pos)
+    end
+  end
+
+  def remove_jumped(pos1,pos2)
+    row = (pos1[0]+pos2[0]) / 2
+    col = (pos1[1] + pos2[1]) / 2
+    self[[row,col]] = nil
+  end
+
+
+  def move!(start_pos,end_pos)
+    self[start_pos].move(end_pos)
+    puts display
+    nil
+  end
 
 
 
@@ -103,7 +124,7 @@ class Board
     RED_START.each do |pos|
       Piece.new(:red, pos, self)
     end
-    BLACK_START.each do |pos|
+    BLUE_START.each do |pos|
       Piece.new(:black,pos,self)
     end
   end
