@@ -21,14 +21,16 @@ class HumanPlayer
   end
 
   def ask_name
-    puts PROMPTS[:name]
+    puts  PROMPTS[:name]
     gets.chomp
   end
 
   def ask_move(prompt)
     puts board.display
-    puts PROMPTS[prompt]
+    puts "#{@name}," + PROMPTS[prompt]
     gets.chomp.split(",").map(&:to_i)
   end
+
+
 
 end

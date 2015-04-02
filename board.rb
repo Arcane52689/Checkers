@@ -56,19 +56,19 @@ class Board
     !self[pos].nil?
   end
 
-  def move(start_pos,end_pos)
-    piece = self[start_pos]
-    raise "NOT A VALID MOVE" unless piece.moves.include?(end_pos)
-    piece.move(end_pos)
-    puts display
-  end
-
-  def jump(start_pos,end_pos)
-    piece = self[start_pos]
-    raise "NOT A VALID MOVE" unless piece.moves.include?(end_pos)
-    piece.move(end_pos)
-    puts display
-  end
+  # def move(start_pos,end_pos)
+  #   piece = self[start_pos]
+  #   raise "NOT A VALID MOVE" unless piece.moves.include?(end_pos)
+  #   piece.move(end_pos)
+  #   puts display
+  # end
+  #
+  # def jump(start_pos,end_pos)
+  #   piece = self[start_pos]
+  #   raise "NOT A VALID MOVE" unless piece.moves.include?(end_pos)
+  #   piece.move(end_pos)
+  #   puts display
+  # end
 
 
 

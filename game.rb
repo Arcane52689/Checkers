@@ -61,11 +61,8 @@ class Checkers
       raise "NOT YOUR PIECE" if self.current_player.color != piece.color
       p piece.moves
       end_pos = current_player.ask_move(:end_pos)
-      if (start_pos[0] - end_pos[0]).abs == 2
-        perform_jump(start_pos, end_pos)
-      else
-        board.move(start_pos,end_pos)
-      end
+      raise "NOT VALID MOVE" unless piece.moves.include?(end_pos)
+      piece.move(end_pos)
     rescue StandardError => e
       puts e.message
       retry
@@ -73,20 +70,6 @@ class Checkers
 
   end
 
-  def perform_jump(start_pos, end_pos = nil)
-    begin
-      end_pos = end_pos || current_player.ask_move(:end_move)
-      piece = board[start_pos]
-      board.jump(start_pos, end_pos)
-      if piece.jumps.any?
-        peform_jump(end_pos) if current_player.jump_again?
-      end
-    rescue => e
-      puts e.message
-      end_pos = nil
-      retry
-    end
-  end
 
 
 end

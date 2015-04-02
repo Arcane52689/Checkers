@@ -68,16 +68,16 @@ class Piece
 
   def perform_slide(end_pos)
     board[position] = nil
-    self.position = new_pos
-    board[new_pos] = self
+    self.position = end_pos
+    board[end_pos] = self
   end
 
 
   def perform_jump(end_pos)
+    board.remove_captured(position,end_pos)
     board[position] = nil
-    self.position = new_pos
-    board[new_pos] = self
-    board.remove_captured(start_pos,end_pos)
+    self.position = end_pos
+    board[end_pos] = self
   end
 
 
