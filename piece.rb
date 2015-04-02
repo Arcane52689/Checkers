@@ -19,12 +19,6 @@ class Piece
   end
 
 
-  def move(new_pos)
-    board[position] = nil
-    self.position = new_pos
-    board[new_pos] = self
-    make_king if king_me?
-  end
 
   def moves
     empty_diagonals + jumps
@@ -50,8 +44,6 @@ class Piece
     result
   end
 
-
-
   def empty_diagonals
     result = []
     row, col = position
@@ -64,6 +56,32 @@ class Piece
 
     result
   end
+
+  def move(end_pos)
+    if (end_pos[0] - position[0]).abs == 2
+      perform_jump(end_pos)
+    else
+      perform_slide(end_pos)
+    end
+    make_king if king_me?
+  end
+
+  def perform_slide(end_pos)
+    board[position] = nil
+    self.position = new_pos
+    board[new_pos] = self
+  end
+
+
+  def perform_jump(end_pos)
+    board[position] = nil
+    self.position = new_pos
+    board[new_pos] = self
+    board.remove_captured(start_pos,end_pos)
+  end
+
+
+
 
   def king_me?
     if color == :red

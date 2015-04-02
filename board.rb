@@ -67,14 +67,13 @@ class Board
     piece = self[start_pos]
     raise "NOT A VALID MOVE" unless piece.moves.include?(end_pos)
     piece.move(end_pos)
-    remove_jumped(start_pos,end_pos)
     puts display
   end
 
 
 
 
-  def remove_jumped(pos1,pos2)
+  def remove_captured(pos1,pos2)
     row = (pos1[0]+pos2[0]) / 2
     col = (pos1[1] + pos2[1]) / 2
     self[[row,col]] = nil

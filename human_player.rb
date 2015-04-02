@@ -26,8 +26,9 @@ class HumanPlayer
   end
 
   def ask_move(prompt)
+    puts board.display
     puts PROMPTS[prompt]
-    gets.chomp.split("").map(&:to_i)
+    gets.chomp.split(",").map(&:to_i)
   end
 
 end

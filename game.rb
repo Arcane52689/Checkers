@@ -5,7 +5,8 @@ require_relative 'Human_player.rb'
 
 class Checkers
 
-  attr_reader :player1, :player2, :board, :current_player
+  attr_reader :player1, :player2, :board
+  attr_accessor :current_player
 
   def self.test
     tom = HumanPlayer.new("Tom")
@@ -26,6 +27,7 @@ class Checkers
   def pass_board
     player1.get_board(board)
     player2.get_board(board)
+  end
 
 
   def set_colors
@@ -58,7 +60,7 @@ class Checkers
       piece = board[start_pos]
       raise "NOT YOUR PIECE" if self.current_player.color != piece.color
       p piece.moves
-      end_pos = current_player.ask_move(:end_move)
+      end_pos = current_player.ask_move(:end_pos)
       if (start_pos[0] - end_pos[0]).abs == 2
         perform_jump(start_pos, end_pos)
       else
@@ -81,6 +83,7 @@ class Checkers
       end
     rescue => e
       puts e.message
+      end_pos = nil
       retry
     end
   end
