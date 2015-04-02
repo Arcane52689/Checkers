@@ -23,6 +23,7 @@ class Piece
     board[position] = nil
     self.position = new_pos
     board[new_pos] = self
+    make_king if king_me?
   end
 
   def moves
@@ -32,7 +33,7 @@ class Piece
   def occupied_by_enemy?(move)
     row, col = position
     new_pos = [row + move[0], col + move[1]]
-    board.occupied?(new_pos) && board[new_pos].color != color
+    board.in_board?(new_pos) && board.occupied?(new_pos) && board[new_pos].color != color
   end
 
 
@@ -63,6 +64,15 @@ class Piece
 
     result
   end
+
+  def king_me?
+    if color == :red
+      position[0] == 0
+    else
+      position[0] == 7
+    end
+  end
+
 
   def make_king
     @diags = UP_DIAG + DOWN_DIAG

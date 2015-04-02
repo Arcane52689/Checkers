@@ -60,11 +60,19 @@ class Board
     piece = self[start_pos]
     raise "NOT A VALID MOVE" unless piece.moves.include?(end_pos)
     piece.move(end_pos)
-    if (start_pos[0] - end_pos[0]).abs == 2
-      remove_jumped(start_pos,end_pos)
-    end
     puts display
   end
+
+  def jump(start_pos,end_pos)
+    piece = self[start_pos]
+    raise "NOT A VALID MOVE" unless piece.moves.include?(end_pos)
+    piece.move(end_pos)
+    remove_jumped(start_pos,end_pos)
+    puts display
+  end
+
+
+
 
   def remove_jumped(pos1,pos2)
     row = (pos1[0]+pos2[0]) / 2
@@ -130,7 +138,7 @@ class Board
       Piece.new(:red, pos, self)
     end
     BLUE_START.each do |pos|
-      Piece.new(:black,pos,self)
+      Piece.new(:blue,pos,self)
     end
     self
   end
