@@ -1,8 +1,10 @@
-UP_DIAG = [[ -1,1], [-1, 1]]
-DOWN_DIAG = [[1,1], [1,-1]]
-
+require_relative "board.rb"
 
 class Piece
+  UP_DIAG = [[ -1,1], [-1, 1]]
+  DOWN_DIAG = [[1,1], [1,-1]]
+
+
   attr_reader :color, :diags
   attr_accessor :position
 
@@ -12,6 +14,8 @@ class Piece
     @board = board
     board[position] = self
     color == :red ? @diags = UP_DIAG : @diags = DOWN_DIAG
+    color == :red ? @symbol = '☺'.colorize(:red) : @symbol = "☺".colorize(:cyan)
+
   end
 
   def moves
@@ -54,8 +58,11 @@ class Piece
 
   def make_king
     @diags = UP_DIAG + DOWN_DIAG
+    color == :red ? @symbol = '♔'.colorize(:red) : @symbol = '♔'.colorize(:white)
   end
 
-  def
+  def to_s
+    @symbol
+  end
 
 end
