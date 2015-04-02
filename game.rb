@@ -11,6 +11,12 @@ class Checkers
   attr_accessor :current_player
 
   def self.comp_game
+    c1 = ComputerPlayer.new
+    c2 = ComputerPlayer.new
+    Checkers.new(c1,c2).play
+  end
+
+  def self.smart_comp_game
     c1 = SmartComp.new
     c2 = ComputerPlayer.new
     Checkers.new(c1,c2).play
@@ -85,9 +91,18 @@ class Checkers
 
   def winner
     puts "Congratulations to #{next_player.name}.  YOU WON!"
+    if next_player == player1
+      return "red"
+    else
+      return "blue"
+    end
   end
 
 end
 
+COUNTER = Hash.new(0)
+20.times do
+  COUNTER[Checkers.comp_game] += 1
+end
 
-Checkers.comp_game
+p COUNTER

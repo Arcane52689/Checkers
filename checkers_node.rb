@@ -38,7 +38,7 @@ class CheckersNode
 
 
   def evaluate(player, children_arr)
-    if children_arr.count == 4
+    if children_arr.count == 1
       return children_arr.inject(0) { |acc,points| acc + points }
     end
 

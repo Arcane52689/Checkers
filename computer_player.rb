@@ -37,7 +37,7 @@ class ComputerPlayer
     else
       @piece = pieces.select { |piece| piece.moves.any? }.sample
     end
-
+     @piece
     [@piece.position]
   end
 
@@ -59,10 +59,12 @@ class SmartComp < ComputerPlayer
     puts "HI"
     best = 0
     best_piece = nil
-    pieces = board.pieces.select { |piece| piece.moves.any? }
+    pieces = board.get_pieces(color).select { |piece| piece.moves.any? }
     pieces.each do |piece|
       node = CheckersNode.new(color, board, piece.position)
+    #  p piece
       move, value = node.best_child
+      #p move, value
       if best_piece == nil
         best_piece = piece
         @move, best = node.best_child

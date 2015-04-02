@@ -75,7 +75,7 @@ class Board
 
   def move!(start_pos,end_pos)
     self[start_pos].move(end_pos)
-    puts display
+    #puts display
     nil
   end
 
