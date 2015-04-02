@@ -81,7 +81,28 @@ class Piece
   end
 
 
+  def perform_moves!(sequence)
+    raise "INVALID MOVE" unless moves.inlcude?(sequence[0])
+    if jumps.include?(sequence[0])
+      perform_jump(sequence[0])
+      perform_moves(sequence[1..-1])
+    else
+      perform_slide(sequence[0])
+    end
+    make_king if king_me?
+  end
 
+  def valid_move_sequence?(sequence)
+    begin
+      duped = board.dup
+      duped_piece = duped[position]
+      duped_piece.perform_moves!(sequence)
+    rescue
+      return false
+    else
+      return true
+    end
+  end
 
   def king_me?
     if color == :red
@@ -100,5 +121,11 @@ class Piece
   def to_s
     @symbol
   end
+
+  def dup(dup_board)
+    self.class.new(color,position, dup_board)
+  end
+
+
 
 end

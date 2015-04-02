@@ -28,7 +28,8 @@ class HumanPlayer
   def ask_move(prompt)
     puts board.display
     puts "#{@name}," + PROMPTS[prompt]
-    gets.chomp.split(",").map(&:to_i)
+    responce = gets.chomp.split("-")
+    response.map { |pair| pair.split(",").map(&:to_i) }
   end
 
 

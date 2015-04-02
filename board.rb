@@ -133,13 +133,32 @@ class Board
 
 
   def place_pieces
-    RED_START.each do |pos|
-      Piece.new(:red, pos, self)
-    end
-    BLUE_START.each do |pos|
-      Piece.new(:blue,pos,self)
-    end
+    place_blue_pieces
+    place_red_pieces
     self
+  end
+
+  def place_blue_pieces
+    0.upto(2) do |row|
+      8.times do |col|
+        Piece.new(:blue,[row,col],self) if (row+col).odd?
+      end
+    end
+  end
+
+  def place_red_pieces
+    5.upto(7) do |row|
+      8.times do |col|
+        Piece.new(:red,[row,col],self) if (row+col).odd?
+      end
+    end
+  end
+
+
+  def dup
+    new_board = Board.new
+    pieces.each { |piece| piece.dup(dup_board) }
+    new_board
   end
 
 
