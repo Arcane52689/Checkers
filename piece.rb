@@ -1,9 +1,11 @@
 require_relative "board.rb"
 require "Byebug"
+
+
 class Piece
   UP_DIAG = [[ -1,1], [-1, -1]]
   DOWN_DIAG = [[1,1], [1,-1]]
-
+  SYMBOLS = [['☓','☠'],['☺','♔'], ['☬','☫'] ]
 
   attr_reader :color, :diags, :board
   attr_accessor :position, :king
@@ -14,7 +16,7 @@ class Piece
     @board = board
     board[position] = self
     color == :red ? @diags = UP_DIAG : @diags = DOWN_DIAG
-    color == :red ? @symbol = '☺'.colorize(:red) : @symbol = "☺".colorize(:cyan)
+    color == :red ? @symbol = '☓'.colorize(:red) : @symbol = "☓".colorize(:cyan)
     @king = false
   end
 
@@ -132,7 +134,7 @@ class Piece
 
   def make_king
     @diags = UP_DIAG + DOWN_DIAG
-    color == :red ? @symbol = '♔'.colorize(:red) : @symbol = '♔'.colorize(:cyan)
+    color == :red ? @symbol = '☠'.colorize(:red) : @symbol = '☠'.colorize(:cyan)
     self.king = true
   end
 

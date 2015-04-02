@@ -90,7 +90,7 @@ class Checkers
 
 
   def winner
-    puts "Congratulations to #{next_player.name}.  YOU WON!"
+    #puts "Congratulations to #{next_player.name}.  YOU WON!"
     if next_player == player1
       return "red"
     else
@@ -101,7 +101,7 @@ class Checkers
 end
 
 COUNTER = Hash.new(0)
-20.times do
+10.times do
   COUNTER[Checkers.comp_game] += 1
 end
 
