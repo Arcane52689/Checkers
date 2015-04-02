@@ -1,6 +1,7 @@
 require_relative 'board.rb'
 require_relative 'piece.rb'
 require_relative 'Human_player.rb'
+require_relative 'computer_player.rb'
 
 
 class Checkers
@@ -8,10 +9,19 @@ class Checkers
   attr_reader :player1, :player2, :board
   attr_accessor :current_player
 
+  def self.comp_game
+    c1 = ComputerPlayer.new
+    c2 = ComputerPlayer.new
+    Checkers.new(c1,c2).play
+  end
+
+
   def self.test
     tom = HumanPlayer.new("Tom")
     tom2 = HumanPlayer.new("Tom2")
-    Checkers.new(tom,tom2).play
+    game = Checkers.new(tom,tom2)
+    game.board.move!([1,4],[4,1])
+    game.play
   end
 
 
@@ -48,21 +58,22 @@ class Checkers
       move = get_move
       self.current_player = next_player
     end
+
+    winner
   end
 
   def game_over?
-    board.get_pieces(current_player.color).none?
+    board.get_pieces(current_player.color).select {|piece| piece.moves.any? }.none?
   end
 
   def get_move
     begin
-      start_pos = current_player.ask_move(:start)
+      start_pos = current_player.ask_move(:start).first
       piece = board[start_pos]
       raise "NOT YOUR PIECE" if self.current_player.color != piece.color
-      p piece.moves
-      end_pos = current_player.ask_move(:end_pos)
-      raise "NOT VALID MOVE" unless piece.moves.include?(end_pos)
-      piece.move(end_pos)
+    #  p piece.moves
+      moves = current_player.ask_move(:end_pos)
+      piece.perform_moves(moves)
     rescue StandardError => e
       puts e.message
       retry
@@ -71,5 +82,11 @@ class Checkers
   end
 
 
+  def winner
+    puts "Congratulations to #{next_player.name}.  YOU WON!"
+  end
 
 end
+
+
+Checkers.comp_game

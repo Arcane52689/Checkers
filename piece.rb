@@ -6,7 +6,7 @@ class Piece
 
 
   attr_reader :color, :diags, :board
-  attr_accessor :position
+  attr_accessor :position, :king
 
   def initialize(color, position, board)
     @color = color
@@ -15,7 +15,7 @@ class Piece
     board[position] = self
     color == :red ? @diags = UP_DIAG : @diags = DOWN_DIAG
     color == :red ? @symbol = '☺'.colorize(:red) : @symbol = "☺".colorize(:cyan)
-
+    @king = false
   end
 
 
@@ -80,9 +80,10 @@ class Piece
     board[end_pos] = self
   end
 
-
-  def perform_moves!(sequence)
-    raise "INVALID MOVE" unless moves.inlcude?(sequence[0])
+  def perform_moves(sequence)
+    # byebug
+    return nil if sequence.empty?
+    raise "INVALID MOVE" unless valid_move_sequence?(sequence)
     if jumps.include?(sequence[0])
       perform_jump(sequence[0])
       perform_moves(sequence[1..-1])
@@ -92,7 +93,23 @@ class Piece
     make_king if king_me?
   end
 
+
+  def perform_moves!(sequence)
+    #byebug
+    return nil if sequence.empty?
+    raise "INVALID MOVE" unless moves.include?(sequence[0])
+    #puts 'hi'
+    if jumps.include?(sequence[0])
+      perform_jump(sequence[0])
+      perform_moves!(sequence[1..-1])
+    else
+      perform_slide(sequence[0])
+    end
+    make_king if king_me?
+  end
+
   def valid_move_sequence?(sequence)
+    return true if sequence.empty?
     begin
       duped = board.dup
       duped_piece = duped[position]
@@ -116,6 +133,7 @@ class Piece
   def make_king
     @diags = UP_DIAG + DOWN_DIAG
     color == :red ? @symbol = '♔'.colorize(:red) : @symbol = '♔'.colorize(:cyan)
+    self.king = true
   end
 
   def to_s
@@ -123,7 +141,12 @@ class Piece
   end
 
   def dup(dup_board)
-    self.class.new(color,position, dup_board)
+    duped = self.class.new(color,position, dup_board)
+    duped.make_king if king
+  end
+
+  def inspect
+    [@symbol, @position].inspect
   end
 
 

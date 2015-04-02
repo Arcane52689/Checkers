@@ -3,24 +3,17 @@ require_relative "board.rb"
 
 
 class Board
-  RED_START = [
-    [5,0],[5,2],[5,4],[5,6],
-    [6,1],[6,3],[6,5],[6,7],
-    [7,0],[7,2],[7,4],[7,6]
-  ]
 
-  BLUE_START = [
-    [0,1],[0,3],[0,5],[0,7],
-    [1,0],[1,2],[1,4],[1,6],
-    [2,1],[2,3],[2,5],[2,7]
-  ]
 
   def self.default_game_board
     Board.new.place_pieces
   end
 
-
-
+  def self.test_game
+    b = Board.new.place_pieces
+    b.move!([1,4],[4,1])
+    b
+  end
   attr_accessor :grid
 
   def initialize
@@ -157,7 +150,7 @@ class Board
 
   def dup
     new_board = Board.new
-    pieces.each { |piece| piece.dup(dup_board) }
+    pieces.each { |piece| piece.dup(new_board) }
     new_board
   end
 

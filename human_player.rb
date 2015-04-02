@@ -1,4 +1,4 @@
-
+require "Byebug"
 class HumanPlayer
   attr_reader :color, :name, :board
 
@@ -27,9 +27,15 @@ class HumanPlayer
 
   def ask_move(prompt)
     puts board.display
+    #byebug
     puts "#{@name}," + PROMPTS[prompt]
-    responce = gets.chomp.split("-")
-    response.map { |pair| pair.split(",").map(&:to_i) }
+    response = gets.chomp.split("-")
+    if response.count == 1
+      [response[0].split(",").map(&:to_i)]
+    else
+
+      response.map { |pair| pair.split(",").map(&:to_i) }
+    end
   end
 
 
